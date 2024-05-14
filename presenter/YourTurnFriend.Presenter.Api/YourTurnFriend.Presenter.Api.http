@@ -1,0 +1,6 @@
+@YourTurnFriend.Presenter.Api_HostAddress = http://localhost:5269
+
+GET {{YourTurnFriend.Presenter.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
