@@ -7,5 +7,12 @@ public record GetByOwnerIdResponse
     string Frequence,
     int DaysToNextEvent,
     DateTime? DateOfLastEvent,
-    Guid? IdOfNextMemberInTurn
+    Guid? IdOfNextMemberInTurn,
+    IEnumerable<MemberResponse> Members
+);
+
+public record MemberResponse
+(
+    Guid Id,
+    string Name
 );

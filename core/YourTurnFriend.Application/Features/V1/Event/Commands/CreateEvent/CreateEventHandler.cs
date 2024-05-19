@@ -1,5 +1,4 @@
 using MediatR;
-using YourTurnFriend.Application.Commons.Constants;
 using YourTurnFriend.Application.Commons.Exceptions;
 using YourTurnFriend.Application.Commons.Wrappers;
 using YourTurnFriend.Domain.Contracts;
@@ -25,7 +24,8 @@ public class CreateEventHandler
         CancellationToken cancellationToken
     )
     {
-        //var user = await _userRepository.GetByIdAsync(request.IdOwner, cancellationToken);
+        var user = await _userRepository.GetByIdAsync(request.IdOwner, cancellationToken) 
+                    ?? throw new BusinessException("User does not exists.");
 
         var isEFrequenceEnum = Enum.TryParse<EFrequenceOfEvent>
                                     (
@@ -39,15 +39,10 @@ public class CreateEventHandler
             throw new BusinessException("Invalid Frequence.");
         }
 
-        // if (user is null)
-        // {
-        //     throw new ApplicationException("User does not exists.");
-        // }
-
         var newEvent = new EventAggregate(
                                 title: request.Title,
                                 frequenceOfEvent: frequenceOfEvent, 
-                                idOwner: request.IdOwner
+                                idOwner: user.Id
                             );
 
         await _eventRepository.AddAsync(

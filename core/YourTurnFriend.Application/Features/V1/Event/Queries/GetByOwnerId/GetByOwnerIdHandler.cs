@@ -26,7 +26,13 @@ public class GetByOwnerIdHandler : IRequestHandler<GetByOwnerIdRequest, Response
                                                             eventDb.Frequence.ToString(),
                                                             eventDb.DaysToNextEvent,
                                                             eventDb.DateOfLastEvent,
-                                                            eventDb.IdOfNextMemberInTurn
+                                                            eventDb.IdOfNextMemberInTurn,
+                                                            eventDb.Members.Select(
+                                                                m => new MemberResponse(
+                                                                    m.Id,
+                                                                    m.Name
+                                                                )
+                                                            )
                                                         )
                                                     );
     }

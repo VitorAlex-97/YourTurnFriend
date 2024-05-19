@@ -11,6 +11,13 @@ public class EventMapping : IEntityTypeConfiguration<Aggregate.Event>
 
         builder.HasKey(x => x.Id);
 
+        builder.Property(x => x.Id)
+                .HasColumnName("ID")
+                .HasConversion(
+                    value => value.ToString().ToLower(),
+                    valueDb => Guid.Parse(valueDb)
+                );
+
         builder.Property(x => x.Title)
             .IsRequired()
             .HasMaxLength(50)
