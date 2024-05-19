@@ -25,7 +25,10 @@ public class CreateEventHandler
         CancellationToken cancellationToken
     )
     {
-        var user = await _userRepository.GetByIdAsync(request.IdOwner, cancellationToken) 
+        var user = await _userRepository.GetByIdAsync(
+                            id: request.IdOwner, 
+                            cancellationToken: cancellationToken
+                        )
                     ?? throw new BusinessException("User does not exists.");
 
         var isEFrequenceEnum = Enum.TryParse<EFrequenceOfEvent>
@@ -62,7 +65,7 @@ public class CreateEventHandler
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        var responseData = new CreateEventResponse(newEvent.Id);
+        var responseData = new CreateEventResponse(Guid.Parse(newEvent.Id));
 
         return Response<CreateEventResponse>.Success(responseData);
     }

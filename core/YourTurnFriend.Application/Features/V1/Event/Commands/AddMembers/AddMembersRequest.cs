@@ -2,9 +2,10 @@ using MediatR;
 using YourTurnFriend.Application.Commons.Wrappers;
 using YourTurnFriend.Application.Features.V1.Event.Responses;
 
-namespace YourTurnFriend.Application.Features.V1.Event.Queries.GetByOwnerId;
+namespace YourTurnFriend.Application.Features.V1.Event.Commands.AddMembers;
 
-public record GetByOwnerIdRequest
+public record AddMembersRequest
 (
-    Guid OwnerId
+    Guid IdEvent,
+    IEnumerable<string> Names
 ) : IRequest<Response<EventResponse>>;

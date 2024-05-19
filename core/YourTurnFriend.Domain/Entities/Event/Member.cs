@@ -7,7 +7,7 @@ public class Member : Entity
 {
 
     public string Name { get; private set; }
-    public Guid IdEvent { get; private set; }
+    public string IdEvent { get; private set; }
 
     protected Member()
     { }
@@ -15,11 +15,11 @@ public class Member : Entity
     public Member
     (
         string name,
-        Guid idEvent
+        string idEvent
     ) : base()
     {
         Name = name;
-        IdEvent = idEvent;
+        IdEvent = idEvent.ToString();
 
         Validate();
     }

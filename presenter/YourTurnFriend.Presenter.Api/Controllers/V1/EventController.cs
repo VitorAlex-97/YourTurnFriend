@@ -1,8 +1,10 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using YourTurnFriend.Application.Commons.Wrappers;
+using YourTurnFriend.Application.Features.V1.Event.Commands.AddMembers;
 using YourTurnFriend.Application.Features.V1.Event.Commnands.CreateEvent;
 using YourTurnFriend.Application.Features.V1.Event.Queries.GetByOwnerId;
+using YourTurnFriend.Application.Features.V1.Event.Responses;
 
 namespace YourTurnFriend.Presenter.Api.Controllers.V1;
 
@@ -23,6 +25,21 @@ public class EventController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(CreateEvent), response);
     }
 
+    [HttpPut("{id}/AddMembers")]
+    public async Task<ActionResult<Response<EventResponse>>> AddMembers
+    (
+        [FromRoute] Guid id,
+        [FromBody] List<string> names
+    ) 
+    {
+        var request = new AddMembersRequest(id, names);
+
+        var response = await _mediator.Send(request);
+
+        return Ok(response);
+    }
+
+
     [HttpGet]
     public async Task<ActionResult<Response<CreateEventResponse>>> Get
     (
@@ -33,7 +50,7 @@ public class EventController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Response<GetByOwnerIdResponse>>> GetById
+    public async Task<ActionResult<Response<EventResponse>>> GetById
     ([FromRoute] Guid id) 
     {
         var request = new GetByOwnerIdRequest(id);

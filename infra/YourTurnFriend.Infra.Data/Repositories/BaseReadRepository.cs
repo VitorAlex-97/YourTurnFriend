@@ -12,8 +12,9 @@ public class BaseReadRepository<TAggregateRoot>(ApplicationDbContext context)
 {
     private readonly ApplicationDbContext _context = context;
 
-    public Task<TAggregateRoot?> GetByIdAsync(
+    public async Task<TAggregateRoot?> GetByIdAsync(
         Guid id, 
+        bool wantPersistence = false,
         CancellationToken cancellationToken = default,
         params Expression<Func<TAggregateRoot, object>>[] includes)
     {
@@ -22,11 +23,15 @@ public class BaseReadRepository<TAggregateRoot>(ApplicationDbContext context)
 
         foreach (var include in includes)
         {
-            query = query.Include(include);;
-            
+            query = query.Include(include);
         }
 
-        return query.FirstOrDefaultAsync(
+        if (!wantPersistence)
+        {
+            query.AsNoTracking();
+        }
+
+        return await query.FirstOrDefaultAsync(
                         aggregate => aggregate.Id.ToString() == id.ToString(), 
                         cancellationToken
                     );

@@ -2,11 +2,12 @@ using MediatR;
 using YourTurnFriend.Application.Commons.Constants;
 using YourTurnFriend.Application.Commons.Exceptions;
 using YourTurnFriend.Application.Commons.Wrappers;
+using YourTurnFriend.Application.Features.V1.Event.Responses;
 using YourTurnFriend.Domain.Repositories;
 
 namespace YourTurnFriend.Application.Features.V1.Event.Queries.GetByOwnerId;
 
-public class GetByOwnerIdHandler : IRequestHandler<GetByOwnerIdRequest, Response<GetByOwnerIdResponse>>
+public class GetByOwnerIdHandler : IRequestHandler<GetByOwnerIdRequest, Response<EventResponse>>
 {
     private readonly IEventRepository _eventRepository;
 
@@ -15,30 +16,15 @@ public class GetByOwnerIdHandler : IRequestHandler<GetByOwnerIdRequest, Response
         _eventRepository = eventRepository;
     }
 
-    public async Task<Response<GetByOwnerIdResponse>> Handle(GetByOwnerIdRequest request, CancellationToken cancellationToken)
+    public async Task<Response<EventResponse>> Handle(GetByOwnerIdRequest request, CancellationToken cancellationToken)
     {
         var eventDb = await _eventRepository.GetByIdAsync(
-                                request.OwnerId, 
-                                cancellationToken,
-                                eventDb => eventDb.Members
+                                id: request.OwnerId, 
+                                cancellationToken: cancellationToken,
+                                includes: eventDb => eventDb.Members
                             ) 
                         ?? throw new BusinessException("Event does not exists.", ApiStatusCode.NOT_FOUND);
                         
-        return Response<GetByOwnerIdResponse>.Success(new GetByOwnerIdResponse(
-                                                            eventDb.Id,
-                                                            eventDb.IdOwner,
-                                                            eventDb.Frequence.ToString(),
-                                                            eventDb.DateOfNextEvent,
-                                                            eventDb.DaysToNextEvent,
-                                                            eventDb.DateOfLastEvent,
-                                                            eventDb.IdOfNextMemberInTurn,
-                                                            eventDb.Members.Select(
-                                                                m => new MemberResponse(
-                                                                    m.Id,
-                                                                    m.Name
-                                                                )
-                                                            )
-                                                        )
-                                                    );
+        return Response<EventResponse>.Success(EventResponse.FromEntity(eventDb));
     }
 }
