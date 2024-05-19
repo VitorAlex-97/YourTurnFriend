@@ -19,6 +19,7 @@ public sealed class Event : AggregateRoot
 
     protected Event()
     { }
+
     public Event
     (
         string title,
@@ -55,7 +56,10 @@ public sealed class Event : AggregateRoot
 
     public void GenerateRandomMemberSequenceTurn() 
     {
-        var random = new Random().Next(_members.Count, 0);
+        DomainExceptionValidation.When(_members.Count == 0, 
+                                        $"To generate random member sequence, should be {nameof(Members)} in Event");
+        
+        var random = new Random().Next(0, _members.Count);
 
         var memberInitialEvent = _members.ToArray()[random];
 

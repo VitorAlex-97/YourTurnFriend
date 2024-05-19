@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using YourTurnFriend.Application.Commons.Wrappers;
 using YourTurnFriend.Application.Features.V1.Event.Commands.AddMembers;
+using YourTurnFriend.Application.Features.V1.Event.Commands.GenerateRandomMemberSequence;
 using YourTurnFriend.Application.Features.V1.Event.Commnands.CreateEvent;
 using YourTurnFriend.Application.Features.V1.Event.Queries.GetByOwnerId;
 using YourTurnFriend.Application.Features.V1.Event.Responses;
@@ -25,7 +26,7 @@ public class EventController(IMediator mediator) : ControllerBase
         return CreatedAtAction(nameof(CreateEvent), response);
     }
 
-    [HttpPut("{id}/AddMembers")]
+    [HttpPatch("{id}/AddMembers")]
     public async Task<ActionResult<Response<EventResponse>>> AddMembers
     (
         [FromRoute] Guid id,
@@ -33,6 +34,19 @@ public class EventController(IMediator mediator) : ControllerBase
     ) 
     {
         var request = new AddMembersRequest(id, names);
+
+        var response = await _mediator.Send(request);
+
+        return Ok(response);
+    }
+
+    [HttpPatch("{id}/GenerateRandomMemberSequence")]
+    public async Task<ActionResult<Response<EventResponse>>> GenerateRandomMemberSequence
+    (
+        [FromRoute] Guid id
+    ) 
+    {
+        var request = new GenerateRandomMemberSequenceRequest(id);
 
         var response = await _mediator.Send(request);
 
