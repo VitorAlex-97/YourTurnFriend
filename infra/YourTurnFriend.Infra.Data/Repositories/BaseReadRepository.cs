@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using YourTurnFriend.Domain.Contracts;
+using YourTurnFriend.Domain.Contracts.Persistence;
 using YourTurnFriend.Domain.SeedWorks;
 using YourTurnFriend.Infra.Data.Context;
 

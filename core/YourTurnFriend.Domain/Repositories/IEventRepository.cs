@@ -1,4 +1,4 @@
-using YourTurnFriend.Domain.Contracts;
+using YourTurnFriend.Domain.Contracts.Persistence;
 using YourTurnFriend.Domain.Entities.Event;
 
 namespace YourTurnFriend.Domain.Repositories;

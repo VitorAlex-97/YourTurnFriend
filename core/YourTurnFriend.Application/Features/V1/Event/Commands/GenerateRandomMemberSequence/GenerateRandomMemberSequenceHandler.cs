@@ -2,7 +2,7 @@ using MediatR;
 using YourTurnFriend.Application.Commons.Exceptions;
 using YourTurnFriend.Application.Commons.Wrappers;
 using YourTurnFriend.Application.Features.V1.Event.Responses;
-using YourTurnFriend.Domain.Contracts;
+using YourTurnFriend.Domain.Contracts.Persistence;
 using YourTurnFriend.Domain.Repositories;
 
 namespace YourTurnFriend.Application.Features.V1.Event.Commands.GenerateRandomMemberSequence;

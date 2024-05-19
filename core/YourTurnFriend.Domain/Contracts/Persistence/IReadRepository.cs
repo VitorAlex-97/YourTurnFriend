@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using YourTurnFriend.Domain.SeedWorks;
 
-namespace YourTurnFriend.Domain.Contracts;
+namespace YourTurnFriend.Domain.Contracts.Persistence;
 
 public interface IReadRepository<TAggregateRoot> 
     : IRepository<TAggregateRoot> 

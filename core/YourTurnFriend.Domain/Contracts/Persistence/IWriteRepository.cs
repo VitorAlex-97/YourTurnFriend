@@ -1,6 +1,6 @@
 using YourTurnFriend.Domain.SeedWorks;
 
-namespace YourTurnFriend.Domain.Contracts;
+namespace YourTurnFriend.Domain.Contracts.Persistence;
 
 public interface IWriteRepository<TAggregateRoot> 
     : IRepository<TAggregateRoot> 

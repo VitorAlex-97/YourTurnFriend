@@ -1,4 +1,4 @@
-namespace YourTurnFriend.Domain.Contracts;
+namespace YourTurnFriend.Domain.Contracts.Persistence;
 
 public interface IUnitOfWork
 {
