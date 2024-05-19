@@ -10,6 +10,7 @@ public sealed class Event : AggregateRoot
 
     public string Title { get; private set; }
     public Guid IdOwner { get; }
+    public DateTime DateOfNextEvent { get; private set; }
     public DateTime? DateOfLastEvent { get; private set; }
     public int DaysToNextEvent => CalcuteDaysToNextEvent();
     public EFrequenceOfEvent Frequence { get; private set; }
@@ -22,12 +23,14 @@ public sealed class Event : AggregateRoot
     (
         string title,
         EFrequenceOfEvent frequenceOfEvent,
-        Guid idOwner
+        Guid idOwner,
+        DateTime dateOfNextEvent
     ) : base()
     {
         IdOwner = idOwner;
         Title = title;
         Frequence = frequenceOfEvent;
+        DateOfNextEvent = dateOfNextEvent;
 
         Validate();
     }
@@ -61,13 +64,7 @@ public sealed class Event : AggregateRoot
 
     private int CalcuteDaysToNextEvent()
     {
-        var quantityDaysFromFrequence = QuantittyDaysFromFrequence();
-
-        if (DateOfLastEvent is null) return 0;
-
-        var daysToNextEvent = (DateOfLastEvent?.AddDays(quantityDaysFromFrequence) - DateTime.Now)?.Days;
-
-        return daysToNextEvent ?? 0;
+        return (DateOfNextEvent - DateTime.Now).Days;
     }
 
     private int QuantittyDaysFromFrequence()
@@ -85,6 +82,13 @@ public sealed class Event : AggregateRoot
     {
         DomainStringValidations.MinLength(3,Title, nameof(Title));
         DomainStringValidations.MaxLength(50,Title, nameof(Title));
+
+        DomainExceptionValidation.When(DateOfNextEvent == default,
+                                        $"{nameof(DateOfNextEvent)} must have a value");
+
+        DomainExceptionValidation.When(DateOfNextEvent.Date < DateTime.Now,
+                                        $"{nameof(DateOfNextEvent)} must have a greater than today");
+                                       
         DomainExceptionValidation.When(IdOwner.Equals(default), $"{IdOwner} must have a value");
     }
 }

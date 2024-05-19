@@ -5,6 +5,7 @@ public record GetByOwnerIdResponse
     Guid Id,
     Guid IdOwner,
     string Frequence,
+    DateTime DateOfNextEvent,
     int DaysToNextEvent,
     DateTime? DateOfLastEvent,
     Guid? IdOfNextMemberInTurn,

@@ -8,4 +8,5 @@ public class CreateEventRequest : IRequest<Response<CreateEventResponse>>
     public Guid IdOwner { get; set; }
     public string Title { get; set; } = string.Empty;
     public string FrequenceOfEvent { get; set; } = string.Empty;
+    public string DateOfNextEvent { get; set; } = string.Empty;
 }

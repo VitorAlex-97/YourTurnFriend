@@ -17,13 +17,18 @@ public class GetByOwnerIdHandler : IRequestHandler<GetByOwnerIdRequest, Response
 
     public async Task<Response<GetByOwnerIdResponse>> Handle(GetByOwnerIdRequest request, CancellationToken cancellationToken)
     {
-        var eventDb = await _eventRepository.GetByIdAsync(request.OwnerId, cancellationToken) 
+        var eventDb = await _eventRepository.GetByIdAsync(
+                                request.OwnerId, 
+                                cancellationToken,
+                                eventDb => eventDb.Members
+                            ) 
                         ?? throw new BusinessException("Event does not exists.", ApiStatusCode.NOT_FOUND);
                         
         return Response<GetByOwnerIdResponse>.Success(new GetByOwnerIdResponse(
                                                             eventDb.Id,
                                                             eventDb.IdOwner,
                                                             eventDb.Frequence.ToString(),
+                                                            eventDb.DateOfNextEvent,
                                                             eventDb.DaysToNextEvent,
                                                             eventDb.DateOfLastEvent,
                                                             eventDb.IdOfNextMemberInTurn,

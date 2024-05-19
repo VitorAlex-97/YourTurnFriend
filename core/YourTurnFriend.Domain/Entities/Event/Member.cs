@@ -9,6 +9,9 @@ public class Member : Entity
     public string Name { get; private set; }
     public Guid IdEvent { get; private set; }
 
+    protected Member()
+    { }
+
     public Member
     (
         string name,

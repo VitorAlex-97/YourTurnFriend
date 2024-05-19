@@ -1,10 +1,14 @@
+using System.Linq.Expressions;
 using YourTurnFriend.Domain.SeedWorks;
 
 namespace YourTurnFriend.Domain.Contracts;
 
-public interface IReadRepository<TAggragateRoot> 
-    : IRepository<TAggragateRoot> 
-        where TAggragateRoot : AggregateRoot
+public interface IReadRepository<TAggregateRoot> 
+    : IRepository<TAggregateRoot> 
+        where TAggregateRoot : AggregateRoot
 {
-    Task<TAggragateRoot?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);
+    Task<TAggregateRoot?> GetByIdAsync(
+        Guid id, 
+        CancellationToken cancellationToken = default,
+        params Expression<Func<TAggregateRoot, object>>[] includes);
 }

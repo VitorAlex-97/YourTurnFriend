@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using YourTurnFriend.Domain.Contracts;
 using YourTurnFriend.Domain.SeedWorks;
@@ -5,16 +6,27 @@ using YourTurnFriend.Infra.Data.Context;
 
 namespace YourTurnFriend.Infra.Data.Repositories;
 
-public class BaseReadRepository<TAggragateRoot>(ApplicationDbContext context) 
-    : IReadRepository<TAggragateRoot> 
-        where TAggragateRoot : AggregateRoot
+public class BaseReadRepository<TAggregateRoot>(ApplicationDbContext context) 
+    : IReadRepository<TAggregateRoot> 
+        where TAggregateRoot : AggregateRoot
 {
     private readonly ApplicationDbContext _context = context;
 
-    public Task<TAggragateRoot?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default)
+    public Task<TAggregateRoot?> GetByIdAsync(
+        Guid id, 
+        CancellationToken cancellationToken = default,
+        params Expression<Func<TAggregateRoot, object>>[] includes)
     {
-        return _context.Set<TAggragateRoot>()
-                    .FirstOrDefaultAsync(
+        var query = _context.Set<TAggregateRoot>()
+                            .AsQueryable();
+
+        foreach (var include in includes)
+        {
+            query = query.Include(include);;
+            
+        }
+
+        return query.FirstOrDefaultAsync(
                         aggregate => aggregate.Id.ToString() == id.ToString(), 
                         cancellationToken
                     );

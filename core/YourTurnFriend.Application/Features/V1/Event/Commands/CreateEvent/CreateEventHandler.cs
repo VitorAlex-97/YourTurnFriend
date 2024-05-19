@@ -1,3 +1,4 @@
+using System.Globalization;
 using MediatR;
 using YourTurnFriend.Application.Commons.Exceptions;
 using YourTurnFriend.Application.Commons.Wrappers;
@@ -38,11 +39,20 @@ public class CreateEventHandler
         {
             throw new BusinessException("Invalid Frequence.");
         }
-
+        
+        DateTime.TryParseExact(
+            s: request.DateOfNextEvent, 
+            format: "dd/MM/yyyy", 
+            provider: CultureInfo.InvariantCulture, 
+            style: DateTimeStyles.None, 
+            result: out DateTime dateOfNextEvent
+        );
+        
         var newEvent = new EventAggregate(
                                 title: request.Title,
                                 frequenceOfEvent: frequenceOfEvent, 
-                                idOwner: user.Id
+                                idOwner: user.Id,
+                                dateOfNextEvent: dateOfNextEvent
                             );
 
         await _eventRepository.AddAsync(
