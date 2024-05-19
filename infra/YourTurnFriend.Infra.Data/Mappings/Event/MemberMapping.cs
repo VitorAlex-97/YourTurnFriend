@@ -13,7 +13,11 @@ public class MemberMapping : IEntityTypeConfiguration<Aggregate.Member>
         builder.HasKey(m => m.Id);
 
         builder.Property(m => m.Id)
-            .HasColumnName("ID");
+            .HasColumnName("ID")
+            .HasConversion(
+                value => value.ToString(),
+                valueDb => Guid.Parse(valueDb)
+            );
 
         builder.Property(m => m.Name)
             .IsRequired()
@@ -22,7 +26,11 @@ public class MemberMapping : IEntityTypeConfiguration<Aggregate.Member>
 
         builder.Property(m => m.IdEvent)
             .IsRequired()
-            .HasColumnName("ID_EVENT");
+            .HasColumnName("ID_EVENT")
+            .HasConversion(
+                value => value.ToString(),
+                valueDb => Guid.Parse(valueDb)
+            );
 
         builder.HasOne<Aggregate.Event>()
             .WithMany(e => e.Members)

@@ -17,7 +17,6 @@ public class AddMembersHandler(IEventRepository eventRepository, IUnitOfWork uni
     {
         var eventDb = await _eventRepository.GetByIdAsync(
                                 id: request.IdEvent,
-                                wantPersistence: true,
                                 cancellationToken: cancellationToken,
                                 includes: eventDb => eventDb.Members
                             )

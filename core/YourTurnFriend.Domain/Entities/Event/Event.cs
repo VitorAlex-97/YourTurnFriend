@@ -9,12 +9,12 @@ public sealed class Event : AggregateRoot
     private readonly HashSet<Member> _members = [];
 
     public string Title { get; private set; }
-    public string IdOwner { get; }
+    public Guid IdOwner { get; }
     public DateTime DateOfNextEvent { get; private set; }
     public DateTime? DateOfLastEvent { get; private set; }
     public int DaysToNextEvent => CalcuteDaysToNextEvent();
     public EFrequenceOfEvent Frequence { get; private set; }
-    public string? IdOfNextMemberInTurn { get; private set; }
+    public Guid? IdOfNextMemberInTurn { get; private set; }
     public IReadOnlySet<Member> Members => _members;
 
     protected Event()
@@ -23,7 +23,7 @@ public sealed class Event : AggregateRoot
     (
         string title,
         EFrequenceOfEvent frequenceOfEvent,
-        string idOwner,
+        Guid idOwner,
         DateTime dateOfNextEvent
     ) : base()
     {
@@ -46,9 +46,9 @@ public sealed class Event : AggregateRoot
         _members.Add(newMember);
     }
 
-    public void RemoveMember(string idMember)
+    public void RemoveMember(Guid idMember)
     {
-       var result = _members.RemoveWhere((member) => member.Id == idMember.ToString());
+       var result = _members.RemoveWhere((member) => member.Id == idMember);
 
         DomainExceptionValidation.When(result == decimal.Zero, "Member does not exists");
     }

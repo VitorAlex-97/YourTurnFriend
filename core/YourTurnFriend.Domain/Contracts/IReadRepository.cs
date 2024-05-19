@@ -9,7 +9,6 @@ public interface IReadRepository<TAggregateRoot>
 {
     Task<TAggregateRoot?> GetByIdAsync(
         Guid id, 
-        bool wantPersistence = false,
         CancellationToken cancellationToken = default,
         params Expression<Func<TAggregateRoot, object>>[] includes);
 }

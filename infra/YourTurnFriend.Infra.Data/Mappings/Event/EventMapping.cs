@@ -13,7 +13,11 @@ public class EventMapping : IEntityTypeConfiguration<Aggregate.Event>
         builder.HasKey(x => x.Id);
 
         builder.Property(x => x.Id)
-            .HasColumnName("ID");
+            .HasColumnName("ID")
+            .HasConversion(
+                value => value.ToString().ToLower(),
+                valueDb => Guid.Parse(valueDb)
+            );;
 
         builder.Property(x => x.Title)
             .IsRequired()
@@ -22,7 +26,11 @@ public class EventMapping : IEntityTypeConfiguration<Aggregate.Event>
 
         builder.Property(x => x.IdOwner)
             .IsRequired()
-            .HasColumnName("ID_OWNER");
+            .HasColumnName("ID_OWNER")
+            .HasConversion(
+                value => value.ToString().ToLower(),
+                valueDb => Guid.Parse(valueDb)
+            );
 
         builder.Property(x => x.DateOfNextEvent)
             .HasColumnName("DATE_NEXT_EVENT")
@@ -45,6 +53,14 @@ public class EventMapping : IEntityTypeConfiguration<Aggregate.Event>
             .IsRequired();
 
         builder.Property(x => x.IdOfNextMemberInTurn)
-            .HasColumnName("ID_NEXT_MEMBER_IN_TURN");
+            .HasColumnName("ID_NEXT_MEMBER_IN_TURN")
+            .HasConversion(
+                value => value != null 
+                            ? value.Value.ToString().ToLower()
+                            : null,
+                valueDb => valueDb != null 
+                            ? Guid.Parse(valueDb)
+                            : null
+            );;
     }
 }

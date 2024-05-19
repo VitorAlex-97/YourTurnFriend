@@ -65,7 +65,7 @@ public class CreateEventHandler
 
         await _unitOfWork.CommitAsync(cancellationToken);
 
-        var responseData = new CreateEventResponse(Guid.Parse(newEvent.Id));
+        var responseData = new CreateEventResponse(newEvent.Id);
 
         return Response<CreateEventResponse>.Success(responseData);
     }

@@ -14,7 +14,6 @@ public class BaseReadRepository<TAggregateRoot>(ApplicationDbContext context)
 
     public async Task<TAggregateRoot?> GetByIdAsync(
         Guid id, 
-        bool wantPersistence = false,
         CancellationToken cancellationToken = default,
         params Expression<Func<TAggregateRoot, object>>[] includes)
     {
@@ -24,11 +23,6 @@ public class BaseReadRepository<TAggregateRoot>(ApplicationDbContext context)
         foreach (var include in includes)
         {
             query = query.Include(include);
-        }
-
-        if (!wantPersistence)
-        {
-            query.AsNoTracking();
         }
 
         return await query.FirstOrDefaultAsync(

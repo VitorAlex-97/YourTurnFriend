@@ -2,9 +2,9 @@ namespace YourTurnFriend.Domain.SeedWorks;
 
 public abstract class Entity
 {
-    public string Id { get; }
+    public Guid Id { get; }
 
-    protected Entity() => Id = Guid.NewGuid().ToString();
+    protected Entity() => Id = Guid.NewGuid();
 
     protected abstract void Validate();
 }

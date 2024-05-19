@@ -5,26 +5,26 @@ namespace YourTurnFriend.Application.Features.V1.Event.Responses;
 
 public record EventResponse
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; set; }
-    public string IdOwner { get; set; }
+    public Guid IdOwner { get; set; }
     public DateTime DateOfNextEvent { get; set; }
     public DateTime? DateOfLastEvent { get; set; }
     public int DaysToNextEvent { get; set; }
     public string Frequence { get; set; } = string.Empty;
-    public string? IdOfNextMemberInTurn { get;  set; }
+    public Guid? IdOfNextMemberInTurn { get;  set; }
     public IEnumerable<MemberResponse> Members { get; set;} = [];
 
     private EventResponse
     (
-        string id,
+        Guid id,
         string title,
-        string idOwner,
+        Guid idOwner,
         DateTime dateOfNextEvent,
         DateTime? dateOfLastEvent,
         int daysToNextEvent,
         string frequence,
-        string? idOfNextMemberInTurn,
+        Guid? idOfNextMemberInTurn,
         IEnumerable<MemberResponse> members
     )
     {
@@ -57,18 +57,18 @@ public record EventResponse
 
 public record MemberResponse
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public string IdEvent { get; set; }
+    public Guid IdEvent { get; set; }
 
     public MemberResponse()
     { }
 
     private MemberResponse
     (
-        string id,
+        Guid id,
         string name,
-        string idEvent
+        Guid idEvent
     )
     {
         Id = id;

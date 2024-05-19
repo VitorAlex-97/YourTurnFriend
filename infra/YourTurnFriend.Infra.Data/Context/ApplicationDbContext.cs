@@ -8,9 +8,7 @@ namespace YourTurnFriend.Infra.Data.Context;
 public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
-    {
-        // ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
-    }
+    { }
 
     public DbSet<User> Users { get; set; }
     public DbSet<Event> Events { get; set; }
