@@ -1,3 +1,4 @@
+
 namespace YourTurnFriend.Application.Commons.Wrappers;
 
 public readonly struct Response<TData>
@@ -23,4 +24,9 @@ public readonly struct Response<TData>
 
     private static Response<TData> CreateFail(TData? data, string? message = default) 
         => new(data, message, false);
+
+    public static explicit operator Response<TData>(Stream v)
+    {
+        throw new NotImplementedException();
+    }
 }

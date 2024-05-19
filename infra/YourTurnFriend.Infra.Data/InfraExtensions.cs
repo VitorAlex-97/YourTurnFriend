@@ -1,11 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualBasic;
 using YourTurnFriend.Domain.Contracts;
 using YourTurnFriend.Domain.Repositories;
 using YourTurnFriend.Infra.Data.Context;
@@ -25,9 +20,14 @@ public static class InfraExtensions
         return services;
     }
 
-    public static IServiceCollection AddDataBase(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddDataBase(this IServiceCollection services, IConfiguration configuration, string? enviroment)
     {
-        var connection = configuration["ConexaoSqlite:SqliteConnectionString"];
+        var connection = configuration.GetConnectionString("DefaultConnection");
+
+        if (enviroment == "Production")
+        {
+            connection = configuration.GetConnectionString("Production");
+        }
         
         services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connection));
 

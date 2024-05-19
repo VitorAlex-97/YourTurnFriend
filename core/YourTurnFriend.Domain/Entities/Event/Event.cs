@@ -16,6 +16,8 @@ public sealed class Event : AggregateRoot
     public Guid? IdOfNextMemberInTurn { get; private set; }
     public IReadOnlySet<Member> Members => _members;
 
+    protected Event()
+    { }
     public Event
     (
         string title,

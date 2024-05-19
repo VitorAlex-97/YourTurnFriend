@@ -1,4 +1,6 @@
 using MediatR;
+using YourTurnFriend.Application.Commons.Constants;
+using YourTurnFriend.Application.Commons.Exceptions;
 using YourTurnFriend.Application.Commons.Wrappers;
 using YourTurnFriend.Domain.Contracts;
 using YourTurnFriend.Domain.Enums.Event;
@@ -6,7 +8,7 @@ using YourTurnFriend.Domain.Repositories;
 using EventAggregate = YourTurnFriend.Domain.Entities.Event.Event;
 
 namespace YourTurnFriend.Application.Features.V1.Event.Commnands.CreateEvent;
-public class CreateEventHandle
+public class CreateEventHandler
 (
     IEventRepository eventRepository,
     IUserRepository userRepository,
@@ -23,7 +25,7 @@ public class CreateEventHandle
         CancellationToken cancellationToken
     )
     {
-        var user = await _userRepository.GetByIdAsync(request.IdOwner, cancellationToken);
+        //var user = await _userRepository.GetByIdAsync(request.IdOwner, cancellationToken);
 
         var isEFrequenceEnum = Enum.TryParse<EFrequenceOfEvent>
                                     (
@@ -34,23 +36,21 @@ public class CreateEventHandle
 
         if (!isEFrequenceEnum)
         {
-            throw new ApplicationException("Invalid Frequence.");
+            throw new BusinessException("Invalid Frequence.");
         }
 
-        if (user is null)
-        {
-            throw new ApplicationException("User does not exists.");
-        }
+        // if (user is null)
+        // {
+        //     throw new ApplicationException("User does not exists.");
+        // }
 
-        var newEvent = new EventAggregate
-                            (
+        var newEvent = new EventAggregate(
                                 title: request.Title,
                                 frequenceOfEvent: frequenceOfEvent, 
                                 idOwner: request.IdOwner
                             );
 
-        await _eventRepository.AddAsync
-                (
+        await _eventRepository.AddAsync(
                     aggregateRoot: newEvent, 
                     cancellationToken: cancellationToken
                 );

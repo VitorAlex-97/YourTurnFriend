@@ -3,5 +3,5 @@ using YourTurnFriend.Domain.Entities.Event;
 
 namespace YourTurnFriend.Domain.Repositories;
 
-public interface IEventRepository : IRepository<Event>, IWriteRepository<Event>
+public interface IEventRepository : IWriteRepository<Event>, IReadRepository<Event>
 { }

@@ -1,9 +1,11 @@
+using YourTurnFriend.Application.Commons.Constants;
+
 namespace YourTurnFriend.Application.Commons.Exceptions;
 
-public class ApplicantionException
+public class BusinessException
 (
     string message,
-    int apiStatusCode
+    int apiStatusCode = ApiStatusCode.BAD_REQUEST
 ) : Exception(message)
 {
     public override string Message { get; } = message;

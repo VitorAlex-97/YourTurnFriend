@@ -8,7 +8,7 @@ public class MemberMapping : IEntityTypeConfiguration<Aggregate.Member>
 {
     public void Configure(EntityTypeBuilder<Aggregate.Member> builder)
     {
-        builder.ToTable("YTF_MEMBER");
+        builder.ToTable("YTF_MEMBERS");
 
         builder.HasKey(m => m.Id);
 

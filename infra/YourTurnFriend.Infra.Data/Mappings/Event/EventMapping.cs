@@ -7,7 +7,7 @@ public class EventMapping : IEntityTypeConfiguration<Aggregate.Event>
 {
     public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Aggregate.Event> builder)
     {
-        builder.ToTable("YTF_EVENTS");
+        builder.ToTable("YTF_EVENT");
 
         builder.HasKey(x => x.Id);
 

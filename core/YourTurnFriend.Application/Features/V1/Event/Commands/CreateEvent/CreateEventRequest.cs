@@ -5,7 +5,7 @@ namespace YourTurnFriend.Application.Features.V1.Event.Commnands.CreateEvent;
 
 public class CreateEventRequest : IRequest<Response<CreateEventResponse>>
 {
-    public Guid IdOwner { get; }
-    public string Title { get; } = string.Empty;
-    public string FrequenceOfEvent { get; } = string.Empty;
+    public Guid IdOwner { get; set; }
+    public string Title { get; set; } = string.Empty;
+    public string FrequenceOfEvent { get; set; } = string.Empty;
 }
