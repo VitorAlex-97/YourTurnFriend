@@ -15,4 +15,10 @@ internal static class DomainStringValidations
         DomainExceptionValidation.When(target.Length > maxLength, 
                                         $"{propertyName} must have less than {maxLength} characters.");
     }
+
+    internal static void NotNull(string target, string propertyName)
+    {
+        DomainExceptionValidation.When(string.IsNullOrWhiteSpace(target), 
+                                        $"{propertyName} must have a value");
+    }
 }

@@ -28,12 +28,12 @@ public class CreateUserHandler
 
         if (userAlreadyExists)
         {
-            throw new BusinessException($"Username is not available");
+            throw new BusinessException($"Username is not available.");
         }
 
         if (request.Password != request.ConfirmPassword)
         {
-            throw new BusinessException($"Passwords divergentes");
+            throw new BusinessException($"Passwords divergentes.");
         }
 
         Entity.ValidateFormatePassword(request.Password);

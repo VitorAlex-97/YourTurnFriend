@@ -35,5 +35,6 @@ public class User : AggregateRoot
     {
         DomainStringValidations.MaxLength(50, Username, nameof(Username));
         DomainStringValidations.MinLength(3, Username, nameof(Username));
+        DomainStringValidations.NotNull(Password, nameof(Password));
     }
 }
