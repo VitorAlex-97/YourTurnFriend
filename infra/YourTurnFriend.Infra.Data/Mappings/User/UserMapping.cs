@@ -13,7 +13,11 @@ public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
         builder.HasKey(u => u.Id);
 
         builder.Property(u => u.Id)
-                .HasColumnName("ID");
+                .HasColumnName("ID")
+                .HasConversion(
+                    value => value.ToString().ToLower(),
+                    valueDb => Guid.Parse(valueDb)
+                );
 
         builder.Property(u => u.Username)
                 .HasColumnName("USERNAME")

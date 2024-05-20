@@ -16,21 +16,24 @@ public class User : AggregateRoot
 
     public User
     (
-        string userName,
+        string username,
         string password
     )
     {
-        Username = userName;
+        Username = username;
         CreatedAt = DateTime.Now;
         Password = password;
         Validate();
+    }
+
+    public static void ValidateFormatePassword(string password)
+    {
+        DomainStringValidations.MinLength(8, password, nameof(Password));
     }
 
     protected override void Validate()
     {
         DomainStringValidations.MaxLength(50, Username, nameof(Username));
         DomainStringValidations.MinLength(3, Username, nameof(Username));
-
-        DomainStringValidations.MaxLength(8, Password, nameof(Password));
     }
 }

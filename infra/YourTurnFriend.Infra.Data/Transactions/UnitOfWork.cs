@@ -1,4 +1,5 @@
 using YourTurnFriend.Domain.Contracts;
+using YourTurnFriend.Domain.Contracts.Persistence;
 using YourTurnFriend.Infra.Data.Context;
 
 namespace YourTurnFriend.Infra.Data.Transactions;

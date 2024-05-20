@@ -14,6 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\core\YourTurnFriend.Application\YourTurnFriend.Application.csproj" />
     <ProjectReference Include="..\..\infra\YourTurnFriend.Infra.Data\YourTurnFriend.Infra.Data.csproj" />
+    <ProjectReference Include="..\..\infra\YourTurnFriend.Infra.ExternalServices\YourTurnFriend.Infra.ExternalServices.csproj" />
   </ItemGroup>
 
 </Project>

@@ -8,4 +8,4 @@ public record CreateUserRequest
     string Username,
     string Password,
     string ConfirmPassword
-) : IRequest<Response<object>>;
+) : IRequest<Response<CreateUserResponse>>;

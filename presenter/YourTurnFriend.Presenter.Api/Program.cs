@@ -1,5 +1,6 @@
 using core.YourTurnFriend.Application;
 using YourTurnFriend.Infra.Data;
+using YourTurnFriend.Infra.ExternalServices;
 using YourTurnFriend.Presenter.Api.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services
         .AddInfraData()
         .AddDataBase(builder.Configuration, enviroment)
-        .AddApplicationLayer();
+        .AddApplicationLayer()
+        .AddExternalService();
 }
 
 var app = builder.Build();

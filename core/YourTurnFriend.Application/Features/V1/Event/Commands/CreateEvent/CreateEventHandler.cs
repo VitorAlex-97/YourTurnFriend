@@ -2,7 +2,7 @@ using System.Globalization;
 using MediatR;
 using YourTurnFriend.Application.Commons.Exceptions;
 using YourTurnFriend.Application.Commons.Wrappers;
-using YourTurnFriend.Domain.Contracts;
+using YourTurnFriend.Domain.Contracts.Persistence;
 using YourTurnFriend.Domain.Enums.Event;
 using YourTurnFriend.Domain.Repositories;
 using EventAggregate = YourTurnFriend.Domain.Entities.Event.Event;
