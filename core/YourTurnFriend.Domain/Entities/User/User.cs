@@ -1,4 +1,3 @@
-using System.Security.Cryptography;
 using YourTurnFriend.Domain.Exceptions;
 using YourTurnFriend.Domain.SeedWorks;
 
