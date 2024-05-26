@@ -14,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services
         .AddInfraData()
         .AddOutBoxMessgeInterceptor()
+        .AddOutBoxMessageJob()
         .AddDataBase(builder.Configuration, enviroment)
         .AddApplicationLayer()
         .AddExternalService();

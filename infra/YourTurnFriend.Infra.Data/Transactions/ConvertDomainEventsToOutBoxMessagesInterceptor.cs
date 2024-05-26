@@ -1,4 +1,3 @@
-using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Newtonsoft.Json;
 using YourTurnFriend.Domain.SeedWorks;
@@ -35,26 +34,21 @@ public class ConvertDomainEventsToOutBoxMessagesInterceptor
 
                 return events;
             })
-            .Select(domainEvent => 
-            {
-                var content = JsonConvert.SerializeObject
-                (
-                    domainEvent, 
-                    new JsonSerializerSettings
-                    {
-                        TypeNameHandling = TypeNameHandling.All
-                    }
-                );
-
-                return new OutBoxMessage 
+            .Select(domainEvent => new OutBoxMessage 
                 {
                     Id = Guid.NewGuid(),
                     Type = domainEvent.GetType().Name,
                     OcurredOn = DateTime.Now,
                     ProcessedOn = null,
-                    Content = content
-                };
-            })
+                    Content = JsonConvert.SerializeObject
+                    (
+                        domainEvent, 
+                        new JsonSerializerSettings
+                        {
+                            TypeNameHandling = TypeNameHandling.All
+                        }
+                    )
+                })
             .ToList();
 
         context.Set<OutBoxMessage>().AddRange(domainEvents);

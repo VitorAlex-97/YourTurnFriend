@@ -1,8 +1,10 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Quartz;
 using YourTurnFriend.Domain.Contracts.Persistence;
 using YourTurnFriend.Domain.Repositories;
+using YourTurnFriend.Infra.Data.BackgroundJobs;
 using YourTurnFriend.Infra.Data.Context;
 using YourTurnFriend.Infra.Data.Repositories;
 using YourTurnFriend.Infra.Data.Transactions;
@@ -48,6 +50,19 @@ public static class InfraExtensions
     {
         services.AddSingleton<ConvertDomainEventsToOutBoxMessagesInterceptor>();
 
+        return services;
+    }
+
+    public static IServiceCollection AddOutBoxMessageJob(this IServiceCollection services)
+    {
+        services.AddQuartz();
+
+        services.AddQuartzHostedService(options => 
+        {
+            options.WaitForJobsToComplete = true;
+        });
+
+        services.ConfigureOptions<OutBoxMessageJobSetup>();
         return services;
     }
 }

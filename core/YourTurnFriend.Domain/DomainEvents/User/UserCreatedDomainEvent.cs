@@ -2,7 +2,7 @@ using YourTurnFriend.Domain.SeedWorks;
 
 namespace YourTurnFriend.Domain.DomainEvents.User;
 
-public class UserCreatedDomainEvent : IDomainEvent
+public sealed class UserCreatedDomainEvent : IDomainEvent
 {
     public Guid UserId { get; }
 
