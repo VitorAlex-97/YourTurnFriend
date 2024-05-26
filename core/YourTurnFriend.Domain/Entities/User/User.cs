@@ -1,3 +1,4 @@
+using YourTurnFriend.Domain.DomainEvents.User;
 using YourTurnFriend.Domain.Exceptions;
 using YourTurnFriend.Domain.SeedWorks;
 
@@ -13,7 +14,7 @@ public class User : AggregateRoot
     protected User()
     {}
 
-    public User
+    private User
     (
         string username,
         string password
@@ -23,6 +24,19 @@ public class User : AggregateRoot
         CreatedAt = DateTime.Now;
         Password = password;
         Validate();
+    }
+
+    public static User Create
+    (
+        string username,
+        string password
+    )
+    {
+        var user = new User(username, password);
+
+        user.RaiseDomainEvent(new UserCreatedDomainEvent(user.Id));
+
+        return user;
     }
 
     public static void ValidateFormatePassword(string password)

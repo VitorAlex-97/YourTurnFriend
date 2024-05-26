@@ -40,7 +40,7 @@ public class CreateUserHandler
 
         var passwordHashed = await _cryptographyService.EncryptAsync(request.Password, cancellationToken);
 
-        var newUser = new Entity(
+        var newUser = Entity.Create(
                                 username: request.Username,
                                 password: passwordHashed ?? string.Empty
                             );

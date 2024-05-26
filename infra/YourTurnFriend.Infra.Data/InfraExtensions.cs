@@ -29,7 +29,24 @@ public static class InfraExtensions
             connection = configuration.GetConnectionString("Production");
         }
         
-        services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connection));
+        services.AddDbContext<ApplicationDbContext>((serviceProvider, options) => 
+        {
+            var outBoxMessageInterceptor = serviceProvider.GetService<ConvertDomainEventsToOutBoxMessagesInterceptor>();
+            
+            options.UseSqlite(connection);
+            
+            if (outBoxMessageInterceptor != null)
+            {
+                options.AddInterceptors(outBoxMessageInterceptor);
+            }
+        });
+
+        return services;
+    }
+
+    public static IServiceCollection AddOutBoxMessgeInterceptor(this IServiceCollection services)
+    {
+        services.AddSingleton<ConvertDomainEventsToOutBoxMessagesInterceptor>();
 
         return services;
     }

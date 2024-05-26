@@ -17,7 +17,7 @@ public class EventMapping : IEntityTypeConfiguration<Aggregate.Event>
             .HasConversion(
                 value => value.ToString().ToLower(),
                 valueDb => Guid.Parse(valueDb)
-            );;
+            );
 
         builder.Property(x => x.Title)
             .IsRequired()

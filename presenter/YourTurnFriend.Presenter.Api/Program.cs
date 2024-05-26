@@ -13,6 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
     var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
     builder.Services
         .AddInfraData()
+        .AddOutBoxMessgeInterceptor()
         .AddDataBase(builder.Configuration, enviroment)
         .AddApplicationLayer()
         .AddExternalService();
