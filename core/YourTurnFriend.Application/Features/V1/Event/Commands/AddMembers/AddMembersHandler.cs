@@ -29,7 +29,10 @@ public class AddMembersHandler
                             )
                         ?? throw new BusinessException("Event does not exists.");
 
-        Parallel.ForEach(request.Names, eventDb.AddMember);
+        foreach (var nameNewMember in request.Names)
+        {
+            eventDb.AddMember(nameNewMember);
+        }
 
         await _unitOfWork.CommitAsync(cancellationToken);
 

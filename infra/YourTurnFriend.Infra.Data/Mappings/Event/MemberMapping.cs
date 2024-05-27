@@ -14,13 +14,13 @@ public class MemberMapping : IEntityTypeConfiguration<Aggregate.Member>
 
         builder.Property(m => m.Id)
             .HasColumnName("ID")
+            .ValueGeneratedNever()
             .HasConversion(
                 value => value.ToString(),
                 valueDb => Guid.Parse(valueDb)
             );
 
         builder.Property(m => m.Name)
-            .IsRequired()
             .HasMaxLength(20)
             .HasColumnName("NAME");
 

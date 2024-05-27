@@ -42,7 +42,7 @@ public class ResponseMiddleware
         //         status = (int)HttpStatusCode.BadRequest;
         //         message = exception.Message;
         //         break;
-        //     case DomainExceptionValidation:
+        //     case DomainExceptionValidation:'
         //         status = (int)HttpStatusCode.UnprocessableEntity;
         //         message = exception.Message;
         //         break;

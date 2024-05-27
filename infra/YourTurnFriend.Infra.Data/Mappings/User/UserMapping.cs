@@ -14,6 +14,7 @@ public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
 
         builder.Property(u => u.Id)
                 .HasColumnName("ID")
+                .ValueGeneratedNever()
                 .HasConversion(
                     value => value.ToString().ToLower(),
                     valueDb => Guid.Parse(valueDb)

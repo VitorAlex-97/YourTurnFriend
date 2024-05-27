@@ -14,6 +14,7 @@ public class OutBoxMessageMapping : IEntityTypeConfiguration<Entity>
 
         builder.Property(x => x.Id)
             .HasColumnName("ID")
+            .ValueGeneratedNever()
             .HasConversion(
                 value => value.ToString().ToLower(),
                 valueDb => Guid.Parse(valueDb)

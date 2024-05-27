@@ -68,7 +68,7 @@ public sealed class Event : AggregateRoot
 
     private int CalcuteDaysToNextEvent()
     {
-        return (DateOfNextEvent - DateTime.Now).Days;
+        return (DateOfNextEvent.Date - DateTime.Now.Date).Days;
     }
 
     private int QuantittyDaysFromFrequence()
