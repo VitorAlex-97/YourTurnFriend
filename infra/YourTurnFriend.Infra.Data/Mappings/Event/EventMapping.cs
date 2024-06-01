@@ -25,7 +25,7 @@ public class EventMapping : IEntityTypeConfiguration<Aggregate.Event>
             .HasMaxLength(50)
             .HasColumnName("TITLE");
 
-        builder.Property(x => x.IdOwner)
+        builder.Property(x => x.OwnerId)
             .IsRequired()
             .HasColumnName("ID_OWNER")
             .HasConversion(

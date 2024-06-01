@@ -24,7 +24,7 @@ public class MemberMapping : IEntityTypeConfiguration<Aggregate.Member>
             .HasMaxLength(20)
             .HasColumnName("NAME");
 
-        builder.Property(m => m.IdEvent)
+        builder.Property(m => m.EventId)
             .IsRequired()
             .HasColumnName("ID_EVENT")
             .HasConversion(
@@ -32,9 +32,13 @@ public class MemberMapping : IEntityTypeConfiguration<Aggregate.Member>
                 valueDb => Guid.Parse(valueDb)
             );
 
+        builder.Property(m => m.SequenceInEvent)
+            .IsRequired(false)
+            .HasColumnName("SEQUENCE_IN_EVENT");
+
         builder.HasOne<Aggregate.Event>()
             .WithMany(e => e.Members)
-            .HasForeignKey(m => m.IdEvent)
+            .HasForeignKey(m => m.EventId)
             .OnDelete(DeleteBehavior.Cascade);
     }
 }
