@@ -3,13 +3,14 @@ using YourTurnFriend.Domain.SeedWorks;
 
 namespace YourTurnFriend.Domain.Entities.Event;
 
-public class Member : Entity
+public sealed class Member : Entity
 {
 
-    public string Name { get; private set; }
-    public Guid IdEvent { get; private set; }
+    public string Name { get; }
+    public Guid EventId { get; }
+    public int? SequenceInEvent { get; private set; }
 
-    protected Member()
+    private Member()
     { }
 
     public Member
@@ -19,7 +20,7 @@ public class Member : Entity
     ) : base()
     {
         Name = name;
-        IdEvent = idEvent;
+        EventId = idEvent;
 
         Validate();
     }
@@ -28,5 +29,16 @@ public class Member : Entity
     {
         DomainStringValidations.MinLength(3, Name, nameof(Name));
         DomainStringValidations.MaxLength(20, Name, nameof(Name));
+        DomainExceptionValidation.When(SequenceInEvent is not null && 
+                                        SequenceInEvent <= 0,
+                                        $"{nameof(SequenceInEvent)} must be greater than 0."
+                                    );
+    }
+
+    internal void UpdateSequence(int sequenceInEvent)
+    {
+        SequenceInEvent = sequenceInEvent;
+
+        Validate();
     }
 }

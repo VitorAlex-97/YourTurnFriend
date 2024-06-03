@@ -19,6 +19,6 @@ internal static class DomainStringValidations
     internal static void NotNull(string target, string propertyName)
     {
         DomainExceptionValidation.When(string.IsNullOrWhiteSpace(target), 
-                                        $"{propertyName} must have a value");
+                                        $"{propertyName} must have a value.");
     }
 }

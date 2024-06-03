@@ -7,7 +7,7 @@ public record EventResponse
 {
     public Guid Id { get; set; }
     public string Title { get; set; }
-    public Guid IdOwner { get; set; }
+    public Guid OwnerId { get; set; }
     public DateTime DateOfNextEvent { get; set; }
     public DateTime? DateOfLastEvent { get; set; }
     public int DaysToNextEvent { get; set; }
@@ -30,7 +30,7 @@ public record EventResponse
     {
         Id = id;
         Title = title;
-        IdOwner = idOwner;
+        OwnerId = idOwner;
         DateOfNextEvent = dateOfNextEvent;
         DateOfLastEvent = dateOfLastEvent;
         DaysToNextEvent = daysToNextEvent;
@@ -44,7 +44,7 @@ public record EventResponse
         return new EventResponse(
                     id: eventEntity.Id,
                     title: eventEntity.Title,
-                    idOwner: eventEntity.IdOwner,
+                    idOwner: eventEntity.OwnerId,
                     dateOfNextEvent: eventEntity.DateOfNextEvent,
                     dateOfLastEvent: eventEntity.DateOfLastEvent,
                     daysToNextEvent: eventEntity.DaysToNextEvent,
@@ -59,7 +59,7 @@ public record MemberResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; } = string.Empty;
-    public Guid IdEvent { get; set; }
+    public Guid EventId { get; set; }
 
     public MemberResponse()
     { }
@@ -73,7 +73,7 @@ public record MemberResponse
     {
         Id = id;
         Name = name;
-        IdEvent = idEvent;
+        EventId = idEvent;
     }
 
     public static MemberResponse FromEntity(Member member)
@@ -81,7 +81,7 @@ public record MemberResponse
         return new MemberResponse(
                     id: member.Id,
                     name: member.Name,
-                    idEvent: member.IdEvent
+                    idEvent: member.EventId
                 );
     }
 }

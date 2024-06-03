@@ -6,8 +6,8 @@ using YourTurnFriend.Presenter.Api.Middlewares;
 var builder = WebApplication.CreateBuilder(args);
 {
     builder.Services
-        .AddEndpointsApiExplorer()
         .AddSwaggerGen()
+        .AddEndpointsApiExplorer()
         .AddControllers();
 
     var enviroment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
@@ -17,7 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
         .AddOutBoxMessageJob()
         .AddDataBase(builder.Configuration, enviroment)
         .AddApplicationLayer()
-        .AddExternalService();
+        .AddExternalService()
+        .AddSignalR();
 }
 
 var app = builder.Build();
@@ -31,7 +32,8 @@ var app = builder.Build();
     app.UseMiddleware<ResponseMiddleware>();
     app.UseHttpsRedirection();
     app.UseRouting();
-    app.UseEndpoints(endppoint => endppoint.MapControllers());
+    app.MapControllers();
+    
     app.Run();
 }
 
