@@ -16,11 +16,12 @@ public sealed class Event : AggregateRoot
     public EFrequenceOfEvent Frequence { get; private set; }
     public Guid? IdOfNextMemberInTurn { get; private set; }
     public IReadOnlySet<Member> Members => _members;
+    public int MaxSequence => _members.Count;
 
     protected Event()
     { }
 
-    public Event
+    private Event
     (
         string title,
         EFrequenceOfEvent frequenceOfEvent,
@@ -32,8 +33,31 @@ public sealed class Event : AggregateRoot
         Title = title;
         Frequence = frequenceOfEvent;
         DateOfNextEvent = dateOfNextEvent;
+    }
 
-        Validate();
+    public static Event Create
+    (
+        string title,
+        EFrequenceOfEvent frequenceOfEvent,
+        Guid ownerId,
+        DateTime dateOfNextEvent,
+        List<string> namesOfMembers
+    )
+    {
+        var newEvent = new Event(
+                            title: title,
+                            frequenceOfEvent: frequenceOfEvent,
+                            idOwner: ownerId,
+                            dateOfNextEvent: dateOfNextEvent
+                        );
+        
+        namesOfMembers.ForEach(newEvent.AddMember);
+
+        newEvent.GenerateRandomMemberSequenceTurn();
+
+        newEvent.Validate();
+
+        return newEvent;
     }
 
     public void AddMember(string name) 
@@ -100,6 +124,42 @@ public sealed class Event : AggregateRoot
         IdOfNextMemberInTurn = idOfNextMemberInTurn;
 
         Validate();
+    }
+
+    public void GenerateNextEventDate(bool fromToday = false)
+    {
+        var currentMemberTurn = _members.Where(x => x.Id == IdOfNextMemberInTurn)
+                                        .FirstOrDefault();
+
+        if (currentMemberTurn?.SequenceInEvent == MaxSequence)
+        {
+            var memberIdOfFirstSequenceTurn = _members.MinBy(x => x.SequenceInEvent);
+            
+            SetNextEventDateParams(nextMemberId: currentMemberTurn.Id, fromToday: fromToday);
+
+            return;
+        }
+
+        var nextMemberTurn = _members.FirstOrDefault(member => member.SequenceInEvent == (currentMemberTurn?.SequenceInEvent + 1));
+    
+        DomainExceptionValidation.When(nextMemberTurn is null, "Not possible to set next Event Date.");
+
+        SetNextEventDateParams(nextMemberId: nextMemberTurn.Id, fromToday: fromToday);
+    }
+
+    private void SetNextEventDateParams(Guid nextMemberId, bool fromToday)
+    {
+        var dateToCalculateNextDate = DateOfLastEvent ?? DateTime.Now;
+
+        DateOfNextEvent = dateToCalculateNextDate.AddDays(QuantittyDaysFromFrequence());
+
+        if (fromToday)
+        {
+            DateOfNextEvent = DateTime.Now.AddDays(QuantittyDaysFromFrequence());
+        }
+
+        IdOfNextMemberInTurn = nextMemberId;
+        DateOfLastEvent = DateOfNextEvent;
     }
 
     private int CalcuteDaysToNextEvent()

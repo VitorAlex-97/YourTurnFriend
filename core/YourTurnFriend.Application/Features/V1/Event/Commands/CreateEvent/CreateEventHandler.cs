@@ -51,11 +51,12 @@ public class CreateEventHandler
             result: out DateTime dateOfNextEvent
         );
         
-        var newEvent = new EventAggregate(
+        var newEvent = EventAggregate.Create(
                                 title: request.Title,
                                 frequenceOfEvent: frequenceOfEvent, 
-                                idOwner: user.Id,
-                                dateOfNextEvent: dateOfNextEvent
+                                ownerId: user.Id,
+                                dateOfNextEvent: dateOfNextEvent,
+                                namesOfMembers: request.NamesOfMembers
                             );
 
         await _eventRepository.AddAsync(

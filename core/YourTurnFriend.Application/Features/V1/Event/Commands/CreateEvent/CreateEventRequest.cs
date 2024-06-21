@@ -9,4 +9,5 @@ public class CreateEventRequest : IRequest<Response<CreateEventResponse>>
     public string Title { get; set; } = string.Empty;
     public string FrequenceOfEvent { get; set; } = string.Empty;
     public string? DateOfNextEvent { get; set; } = DateOnly.FromDateTime(DateTime.Now).ToString();
+    public List<string> NamesOfMembers { get; set; } = [];
 }
