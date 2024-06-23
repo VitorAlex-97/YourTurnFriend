@@ -7,5 +7,6 @@ public record CreateUserRequest
 (
     string Username,
     string Password,
-    string ConfirmPassword
+    string ConfirmPassword,
+    List<string> RolesName
 ) : IRequest<Response<CreateUserResponse>>;

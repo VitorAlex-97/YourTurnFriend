@@ -7,7 +7,7 @@ using YourTurnFriend.Domain.Repositories;
 
 namespace YourTurnFriend.Application.Features.V1.Event.Commands.GenerateNextEventDate;
 
-public class GenerateNextEventDateHandler
+public sealed class GenerateNextEventDateHandler
 (
     IUnitOfWork unitOfWork, 
     IEventRepository eventRepository
@@ -23,10 +23,9 @@ public class GenerateNextEventDateHandler
         CancellationToken cancellationToken
     )
     {
-        var eventInProcess = await _eventRepository.GetByIdAsync(
+        var eventInProcess = await _eventRepository.GetOneAsync(
                                         id: request.EventId,
-                                        cancellationToken: cancellationToken,
-                                        includes: eventDb => eventDb.Members
+                                        cancellationToken: cancellationToken
                                     )
                                 ?? throw new BusinessException("Event does not exists.");
 

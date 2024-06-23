@@ -17,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
         .AddOutBoxMessageJob()
         .AddDataBase(builder.Configuration, enviroment)
         .AddApplicationLayer()
+        .AddDomainServices()
         .AddExternalService()
         .AddSignalR();
 }

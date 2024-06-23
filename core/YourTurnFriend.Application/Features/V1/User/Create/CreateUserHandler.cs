@@ -3,6 +3,7 @@ using YourTurnFriend.Application.Commons.Exceptions;
 using YourTurnFriend.Application.Commons.Wrappers;
 using YourTurnFriend.Domain.Contracts.Persistence;
 using YourTurnFriend.Domain.Contracts.Services.Cryptography;
+using YourTurnFriend.Domain.DomainServices.Interfaces;
 using YourTurnFriend.Domain.Repositories;
 using Entity = YourTurnFriend.Domain.Entities.User.User;
 
@@ -12,11 +13,13 @@ public class CreateUserHandler
 (
     IUserRepository userRepository,
     ICryptographyService cryptographyService,
+    IAddRoleToUserService addRoleToUserService,
     IUnitOfWork unitOfWork
 ) : IRequestHandler<CreateUserRequest, Response<CreateUserResponse>>
 {
     private readonly IUserRepository _userRepository = userRepository;
     private readonly ICryptographyService _cryptographyService = cryptographyService;
+    private readonly IAddRoleToUserService _addRoleToUserService = addRoleToUserService;
     private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<Response<CreateUserResponse>> Handle(CreateUserRequest request, CancellationToken cancellationToken)
@@ -44,6 +47,12 @@ public class CreateUserHandler
                                 username: request.Username,
                                 password: passwordHashed ?? string.Empty
                             );
+        
+        await _addRoleToUserService.ExecuteAsync(
+                        userToReciveRoles: newUser, 
+                        rolesNames: request.RolesName, 
+                        cancellationToken: cancellationToken
+                    );
 
         await _userRepository.AddAsync(newUser, cancellationToken);
 

@@ -25,7 +25,7 @@ public class CreateEventHandler
         CancellationToken cancellationToken
     )
     {
-        var user = await _userRepository.GetByIdAsync(
+        var user = await _userRepository.GetOneAsync(
                             id: request.IdOwner, 
                             cancellationToken: cancellationToken
                         )

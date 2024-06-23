@@ -23,10 +23,9 @@ public class GenerateRandomMemberSequenceHandler
         CancellationToken cancellationToken
     )
     {
-        var eventDb = await _eventRepository.GetByIdAsync(
+        var eventDb = await _eventRepository.GetOneAsync(
                                 id: request.EventId,
-                                cancellationToken: cancellationToken,
-                                eventDb => eventDb.Members
+                                cancellationToken: cancellationToken
                             )
                         ?? throw new BusinessException("User does not exists.");
 

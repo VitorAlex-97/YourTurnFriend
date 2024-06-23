@@ -18,10 +18,9 @@ public class RemoveMemberHandler
 
     public async Task<Response<EventResponse>> Handle(RemoveMemberCommand request, CancellationToken cancellationToken)
     {
-        var eventDb = await _eventRepository.GetByIdAsync(
+        var eventDb = await _eventRepository.GetOneAsync(
                                 id: request.EventId,
-                                cancellationToken: cancellationToken,
-                                includes:e => e.Members
+                                cancellationToken: cancellationToken
                             ) ?? throw new BusinessException("Event not found.");
 
         eventDb.RemoveMember(request.MemberId);

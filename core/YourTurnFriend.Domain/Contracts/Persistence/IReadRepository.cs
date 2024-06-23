@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using YourTurnFriend.Domain.SeedWorks;
 
 namespace YourTurnFriend.Domain.Contracts.Persistence;
@@ -7,8 +6,9 @@ public interface IReadRepository<TAggregateRoot>
     : IRepository<TAggregateRoot> 
         where TAggregateRoot : AggregateRoot
 {
-    Task<TAggregateRoot?> GetByIdAsync(
+    Task<TAggregateRoot?> GetOneAsync(
         Guid id, 
-        CancellationToken cancellationToken = default,
-        params Expression<Func<TAggregateRoot, object>>[] includes);
+        bool asTracking = false,
+        CancellationToken cancellationToken = default
+    );
 }

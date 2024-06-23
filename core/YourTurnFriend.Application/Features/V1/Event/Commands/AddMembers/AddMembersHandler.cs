@@ -22,11 +22,9 @@ public class AddMembersHandler
         CancellationToken cancellationToken
     )
     {
-        var eventDb = await _eventRepository.GetByIdAsync(
+        var eventDb = await _eventRepository.GetOneAsync(
                                 id: request.IdEvent,
-                                cancellationToken: cancellationToken,
-                                includes: eventDb => eventDb.Members
-                            )
+                                cancellationToken: cancellationToken)
                         ?? throw new BusinessException("Event does not exists.");
 
         foreach (var nameNewMember in request.Names)
