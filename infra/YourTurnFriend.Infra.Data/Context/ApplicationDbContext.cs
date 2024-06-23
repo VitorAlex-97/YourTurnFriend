@@ -1,6 +1,7 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
 using YourTurnFriend.Domain.Entities.Event;
+using YourTurnFriend.Domain.Entities.Role;
 using YourTurnFriend.Domain.Entities.User;
 using YourTurnFriend.Infra.Data.OutBox;
 
@@ -15,6 +16,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Event> Events { get; set; }
     public DbSet<Member> Members { get; set; }
     public DbSet<OutBoxMessage> OutBoxMessages { get; set; }
+    public DbSet<Role> Roles { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

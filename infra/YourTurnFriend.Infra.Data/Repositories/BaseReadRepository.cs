@@ -12,17 +12,17 @@ public class BaseReadRepository<TAggregateRoot>(ApplicationDbContext context)
 {
     private readonly ApplicationDbContext _context = context;
 
-    public async Task<TAggregateRoot?> GetByIdAsync(
+    public async Task<TAggregateRoot?> GetOneAsync(
         Guid id, 
-        CancellationToken cancellationToken = default,
-        params Expression<Func<TAggregateRoot, object>>[] includes)
+        bool asTracking = false,
+        CancellationToken cancellationToken = default)
     {
         var query = _context.Set<TAggregateRoot>()
                             .AsQueryable();
 
-        foreach (var include in includes)
+        if (asTracking)
         {
-            query = query.Include(include);
+            query = query.AsNoTracking();
         }
 
         return await query.FirstOrDefaultAsync(

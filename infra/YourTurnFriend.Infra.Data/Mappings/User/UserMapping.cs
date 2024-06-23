@@ -47,5 +47,11 @@ public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
                                 : null
                 )
                 .HasColumnName("LAST_UPDATED_AT");
+        
+        builder.HasMany(u => u.Roles)
+			.WithMany()
+			.UsingEntity("YTF_USER_ROLE");
+
+        builder.Navigation(x => x.Roles).AutoInclude();
     }
 }

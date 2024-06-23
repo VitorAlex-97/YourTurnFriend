@@ -62,6 +62,8 @@ public class EventMapping : IEntityTypeConfiguration<Aggregate.Event>
                 valueDb => valueDb != null 
                             ? Guid.Parse(valueDb)
                             : null
-            );;
+            );
+
+        builder.Navigation(x => x.Members).AutoInclude();
     }
 }
