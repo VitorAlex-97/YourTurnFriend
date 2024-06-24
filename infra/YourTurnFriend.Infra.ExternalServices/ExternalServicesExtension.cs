@@ -1,7 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using YourTurnFriend.Domain.Contracts.Services.Cryptography;
+using YourTurnFriend.Domain.Contracts.Services.Security;
 using YourTurnFriend.Domain.Contracts.Services.SendEmail;
 using YourTurnFriend.Infra.ExternalServices.Cryptography;
+using YourTurnFriend.Infra.ExternalServices.Security;
 using YourTurnFriend.Infra.ExternalServices.SendEmail;
 
 namespace YourTurnFriend.Infra.ExternalServices;
@@ -12,6 +14,7 @@ public static class ExternalServicesExtension
     {
         services.AddScoped<ICryptographyService, CryptographyService>();
         services.AddScoped<ISendEmailService, SendEmailService>();
+        services.AddScoped<ITokenService, TokenService>();
 
         return services;
     }

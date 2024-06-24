@@ -6,4 +6,5 @@ namespace YourTurnFriend.Domain.Repositories;
 public interface IUserRepository : IReadRepository<User>, IWriteRepository<User>
 { 
     Task<bool> ExistsByUsernameAsync(string username, CancellationToken cancellationToken = default);
+    Task<User?> GetOneAsync(string username, CancellationToken cancellationToken = default);
 }

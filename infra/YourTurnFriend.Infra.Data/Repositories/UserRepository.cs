@@ -19,4 +19,9 @@ internal class UserRepository(ApplicationDbContext context)
     {
         return await _context.Users.AnyAsync(user => user.Username == username, cancellationToken);
     }
+
+    public async Task<User?> GetOneAsync(string username, CancellationToken cancellationToken = default)
+    {
+        return await _context.Users.FirstOrDefaultAsync(user => user.Username == username, cancellationToken);
+    }
 }
